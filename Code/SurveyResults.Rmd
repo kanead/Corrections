@@ -1,0 +1,439 @@
+---
+title: "Survey Results"
+output: 
+  html_document:
+    theme: lumen      
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Description
+
+To explore how peers experience the current situation regarding amendments of scientific papers, we ran a survey titled "Amending the scientific literature: A survey". 
+
+The survey was distributed mainly via Twitter for the first time on January 10th, and remained open for a period of three weeks until January 31st. During this period, we received a total of 132 individual responses. 
+
+In this file, we present the results of the survey. We will go through each question and give a breakdown of the responses. 
+
+&nbsp;
+&nbsp;
+
+```{r, include=FALSE}
+
+db = read.csv("Survey.csv")
+UA = read.csv("WhyUA.csv")
+NFA = read.csv("WhyNFA.csv")
+
+summary(db)
+db$count = 1
+
+library(RColorBrewer)
+library(ggplot2)
+library(scales)
+
+#Question 1
+db$Q1 = db$What.field.are.you.currently.in..
+Q1 = db[, c("Q1","count")]
+
+Answers = as.data.frame(tapply (Q1$count, Q1$Q1, sum))
+colnames(Answers) = "Count"
+Answers$Category = row.names(Answers)
+
+Answers1 <- Answers[Answers$Count != 1,]
+Answers2 <- Answers[Answers$Count == 1,]
+AnswersAdd <- data.frame(Count = sum(Answers2$Count), Category = "Other")
+Q1 <- rbind(Answers1, AnswersAdd)
+
+#Create proportions 
+Q1$Prop = Q1$Count/sum(Q1[,1]) *100
+
+#Question 2: What is your position? N = 132
+
+#First collate the answers with n < 5 into category "Other" 
+db$Q2 = db$What.is.your.position.
+Q2 = db[, c("Q2","count")]
+
+Answers = as.data.frame(tapply (Q2$count, Q2$Q2, sum))
+colnames(Answers) = "Count"
+Answers$Category = row.names(Answers)
+
+Answers1 <- Answers[Answers$Count > 4,]
+Answers2 <- Answers[Answers$Count < 5,]
+AnswersAdd <- data.frame(Count = sum(Answers2$Count), Category = "Other")
+Q2 <- rbind(Answers1, AnswersAdd)
+
+#Create proportions 
+Q2$Prop = Q2$Count/sum(Q2[,1])*100
+
+
+#Question 3: What is your gender? N = 132
+
+#No need to collate here, just create the dataset
+db$Q3 = db$What.is.your.gender..
+Q3 = db[, c("Q3","count")]
+
+Q3 = as.data.frame(tapply (Q3$count, Q3$Q3, sum))
+colnames(Q3) = "Count"
+Q3$Category = row.names(Q3)
+
+#Create proportions 
+Q3$Prop = Q3$Count/sum(Q3[,1])*100
+
+
+#Question 4: Have you published in a peer-reviewed journal before? N = 132
+
+#No need to collate here, just create the dataset
+db$Q4 = db$Have.you.published.in.a.peer.reviewed.journal.before..
+Q4 = db[, c("Q4","count")]
+
+Q4 = as.data.frame(tapply (Q4$count, Q4$Q4, sum))
+colnames(Q4) = "Count"
+Q4$Category = row.names(Q4)
+
+#Create proportions 
+Q4$Prop = Q4$Count/sum(Q4[,1])*100
+
+
+
+#Question 5: Are you aware it is possible to make amendments to peer-reviewed publications? N = 132
+
+
+#Let's split this one up into everyone and only the people who have published in a peer reviewed journal before
+
+#First we'll create the one with everyone: 
+
+#No need to collate here, just create the dataset
+db$Q5 = db$Are.you.aware.it.is.possible.to.make.amendments.to.peer.reviewed.publications.
+Q5 = db[, c("Q5","count")]
+
+Q5 = as.data.frame(tapply (Q5$count, Q5$Q5, sum))
+colnames(Q5) = "Count"
+Q5$Category = row.names(Q5)
+
+#Create proportions 
+Q5$Prop = Q5$Count/sum(Q5[,1])*100
+
+Q5.1 = Q5
+
+#And then with only the ones who have published before 
+db$Q5 = db$Are.you.aware.it.is.possible.to.make.amendments.to.peer.reviewed.publications.
+
+Q5 = db[, c("Q5","count", "Q4")]
+Q5 = subset (Q5, Q4 == "Yes")
+Q5 = as.data.frame(tapply (Q5$count, Q5$Q5, sum))
+colnames(Q5) = "Count"
+Q5$Category = row.names(Q5)
+
+#Create proportions 
+Q5$Prop = Q5$Count/sum(Q5[,1])*100
+
+Q5.2 = Q5
+
+
+
+
+
+
+
+#Question 6: Have you ever considered amending some (minor or major) aspect of your previously published work? N = 132
+
+
+#Here we have omitted the participants (n = 11) that have indicated that they have not published before. 
+db$Q6 = db$Have.you.ever.considered.amending.some..minor.or.major..aspect.of.your.previously.published.work.
+
+Q6 = db[, c("Q6","count", "Q4")]
+Q6 = subset (Q6, Q4 == "Yes")
+Q6 = as.data.frame(tapply (Q6$count, Q6$Q6, sum))
+colnames(Q6) = "Count"
+Q6$Category = row.names(Q6)
+
+#Create proportions 
+Q6$Prop = Q6$Count/sum(Q6[,1])*100
+
+
+
+
+#Question 7: Have you ever attempted to amend an error in one of your published works via the journal, and were you successful? N = 132
+
+
+#Let's split this one up into everyone and only the people who made an attempt before
+
+#First we'll create the one with everyone: 
+
+#No need to collate here, just create the dataset
+db$Q7 = db$Have.you.ever.attempted.to.amend.an.error.in.one.of.your.published.works.via.the.journal..Were.you.successful.
+Q7 = db[, c("Q7","count")]
+
+Q7 = as.data.frame(tapply (Q7$count, Q7$Q7, sum))
+colnames(Q7) = "Count"
+Q7$Category = row.names(Q7)
+
+#Create proportions 
+Q7$Prop = Q7$Count/sum(Q7[,1])*100
+
+Q7.1 = Q7
+
+
+#And then with only the ones who have made an attempt before
+Q7 = subset (Q7, Category != "Never made an attempt")
+
+#Create proportions 
+Q7$Prop = Q7$Count/sum(Q7[,1])*100
+
+Q7.2 = Q7
+
+
+
+
+
+#Question 8: If your attempt was successful: would you agree that the current amendment system works well? N = 127
+
+
+#Here we exclude the individuals that have previously answered that they have made a succesful attempt
+db$Q8 = db$If.your.attempt.was.successful..would.you.agree.that.the.current.amendment.system.works.well.
+
+Q8 = db[, c("Q8","count", "Q7")]
+Q8 = subset (Q8, Q7 == "Successful attempt") #N = 19
+Q8 = as.data.frame(tapply (Q8$count, Q8$Q8, sum))
+colnames(Q8) = "Count"
+Q8$Category = row.names(Q8)
+
+#Create proportions 
+Q8$Prop = Q8$Count/sum(Q8[,1])*100
+
+
+
+
+#Question 9: If the attempt for amendment was unsuccessful: Why?
+
+UA$Count = 1
+
+# We will exclude individuals who responded "I have made no attempts", since we're not interested here in individuals that have not made an attempt
+
+# This was an optional question. We end up with n = 11 individuals, note that multiple choice is available here, so the sum will be larger than 11. 
+
+UA = subset (UA, FinalResponse != "I have made no attempts")
+Q9 = as.data.frame(tapply (UA$Count, UA$FinalResponse, sum))
+colnames (Q9) = "Count"
+Q9$Category = rownames(Q9)
+
+
+Q9$Prop = Q9$Count/11 * 100
+
+
+
+
+#Question 10: If you haven't formalized an attempt for amendment: Why not?
+
+# This was also an optional question, but here we had more respondees. After omitting rows of participants that answered "I have not considered an attempt", the remaining dataset consisted of n = 34 participants.
+NFA$Count = 1
+NFA = subset (NFA, FinalResponse != "I have not considered an attempt for amendment")
+Q10 = as.data.frame(tapply (NFA$Count, NFA$FinalResponse, sum))
+colnames (Q10) = "Count"
+Q10$Category = rownames(Q10)
+
+
+Q10$Prop = Q10$Count/34 * 100
+
+
+# Question 11: Would you welcome such a framework for published papers (ran by authors)?
+
+
+# We will add anything that is not a yes or no to a new group called "Conditional support". 
+db$Q11 = db$Would.you.welcome.such.a.framework.for.published.papers..ran.by.authors...
+Q11 = db[, c("Q11","count")]
+Q11$Q11 = ifelse(Q11$Q11 == "Yes"|Q11$Q11 == "No", Q11$Q11, "Conditional support")
+
+Q11 = as.data.frame(tapply (Q11$count, Q11$Q11, sum))
+colnames(Q11) = "Count"
+Q11$Category = row.names(Q11)
+
+
+#Create proportions 
+Q11$Prop = Q11$Count/sum(Q11[,1])*100
+
+```
+
+### Question 1: What field are you currently in? 
+
+Mandatory question, only one answer possible. Various options provided. Participants were allowed to give a unique response. 
+To maintain a good overview, we collated unique answers, i.e. answers with a frequency of 1, into a new category named "Other". 
+
+```{r}
+ggplot(Q1, aes(x=reorder(Category, -Prop), y=Prop, fill=as.factor(Category))) +  geom_bar(colour = "black", stat = "identity", size = 1.2) + scale_fill_brewer(palette = "RdYlBu") + theme_classic(base_size = 10) + theme(legend.position="none", axis.line = element_blank()) + ylab ("Percentage of answers") + xlab("") + ylim (0,100) + labs( caption = "n = 132") + scale_x_discrete(labels = wrap_format(10))
+```
+&nbsp;
+
+Although we had participants from multiple disciplines, we see that the majority are active in Life Sciences, namely 65% (86/132). 
+
+&nbsp;
+&nbsp;
+
+### Question 2: What is your position? 
+
+Mandatory question, only one answer possible. Participants were allowed to give a unique response. 
+To maintain a good overview, we collated answers with a frequency lower than 5, into a new category named "Other". 
+
+```{r}
+ggplot(Q2, aes(x=reorder(Category, -Prop), y=Prop, fill=as.factor(Category))) +  geom_bar(colour = "black", stat = "identity", size = 1.2) + scale_fill_brewer(palette = "RdYlBu") + theme_classic(base_size = 15) + theme(legend.position="none", axis.line = element_blank()) + ylab ("Percentage of answers") + xlab("") + ylim (0,100) + labs(caption = "n = 132") 
+```
+&nbsp;
+
+We can see that our survey has a good representation from different career stages. 
+
+&nbsp;
+&nbsp;
+
+### Question 3: What is your gender?
+
+Mandatory question, only one answer possible. Participants were allowed to give a unique response.
+
+```{r}
+ggplot(Q3, aes(x=reorder(Category, -Prop), y=Prop, fill=as.factor(Category))) +  geom_bar(colour = "black", stat = "identity", size = 1.2) + scale_fill_brewer(palette = "RdYlBu") + theme_classic(base_size = 15) + theme(legend.position="none", axis.line = element_blank()) + ylab ("Percentage of answers") + xlab("") + ylim (0,100) + labs(caption = "n = 132") 
+```
+&nbsp;
+
+We can see that we had a pretty much 50/50 split in genders, with n = 3 participants indicating that they prefered not to specify. 
+
+&nbsp;
+&nbsp;
+
+### Question 4: Have you published in a peer-reviewed journal before?
+
+Mandatory question, only one answer possible. Participants were only given "Yes" or "No" as options.
+
+```{r}
+ggplot(Q4, aes(x=reorder(Category, -Prop), y=Prop, fill=as.factor(Category))) +  geom_bar(colour = "black", stat = "identity", size = 1.2) + scale_fill_brewer(palette = "RdYlBu") + theme_classic(base_size = 15) + theme(legend.position="none", axis.line = element_blank()) + ylab ("Percentage of answers") + xlab("") + ylim (0,100) + labs(caption = "n = 132") 
+```
+&nbsp;
+
+We can see that more than 90% of our participants have published in a peer-reviewed journal. 
+
+&nbsp;
+&nbsp;
+
+### Question 5: Are you aware it is possible to make amendments to peer-reviewed publications?
+
+Mandatory question, only one answer possible. Participants were only given "Yes" or "No" as options.
+Since we think that the answers may be influenced by a participant's experience with publishing, we show two plots here. The first one is of all participants. The second one only includes participants who had indicated that they have published before. 
+
+```{r}
+ggplot(Q5.1, aes(x=reorder(Category, -Prop), y=Prop, fill=as.factor(Category))) +  geom_bar(colour = "black", stat = "identity", size = 1.2) + scale_fill_brewer(palette = "RdYlBu") + theme_classic(base_size = 15) + theme(legend.position="none", axis.line = element_blank()) + ylab ("Percentage of answers") + xlab("") + ylim (0,100) + labs(subtitle = "All participants", caption = "n = 132")
+
+```
+&nbsp;
+
+```{r}
+ggplot(Q5.2, aes(x=reorder(Category, -Prop), y=Prop, fill=as.factor(Category))) +  geom_bar(colour = "black", stat = "identity", size = 1.2) + scale_fill_brewer(palette = "RdYlBu") + theme_classic(base_size = 15) + theme(legend.position="none", axis.line = element_blank()) + ylab ("Percentage of answers") + xlab("") + ylim (0,100) + labs(subtitle = "Participants with peer-reviewed paper", caption = "n = 121")
+```
+
+We can see that, surprisingly, the proportions show little effect of previous experience. In both cases, even when only including individuals that have at least one peer-reviewed paper, roughly 30% is not aware that papers can be amended. 
+
+&nbsp;
+&nbsp;
+
+### Question 6: Have you ever considered amending some (minor or major) aspect of your previously published work?
+
+Mandatory question, only one answer possible. Participants were only given "Yes", "No" or "I have not previously published" as options. Since the question relates to individuals that have published, we have here omitted the responses (n=11) that indicated "I have not previously published".
+
+```{r}
+ggplot(Q6, aes(x=reorder(Category, Prop), y=Prop, fill=as.factor(Category))) +  geom_bar(colour = "black", stat = "identity", size = 1.2) + scale_fill_brewer(palette = "RdYlBu") + theme_classic(base_size = 15) + theme(legend.position="none", axis.line = element_blank()) + ylab ("Percentage of answers") + xlab("") + ylim (0,100) + labs(subtitle = "Participants with peer-reviewed paper", caption = "n = 121")
+```
+&nbsp;
+
+We can see that roughly a third of the participants has considered amending previously published work. 
+
+&nbsp;
+&nbsp;
+
+### Question 7: Have you ever attempted to amend an error in one of your published works via the journal, and were you successful?
+
+Mandatory question, only one answer possible. Participants were only given "Succesful attempt", "Unsuccesful attempt" or "Never made an attempt" as options. To break down the results, we will show two figures again. The first one shows the responses of all participants. The second one shows only the responses of participants that have made an attempt. 
+
+```{r}
+ggplot(Q7.1, aes(x=reorder(Category, -Prop), y=Prop, fill=as.factor(Category))) +  geom_bar(colour = "black", stat = "identity", size = 1.2) + scale_fill_brewer(palette = "RdYlBu") + theme_classic(base_size = 15) + theme(legend.position="none", axis.line = element_blank()) + ylab ("Percentage of answers") + xlab("") + ylim (0,100) + labs(subtitle = "All participants", caption = "n = 132") 
+```
+&nbsp;
+
+```{r}
+ggplot(Q7.2, aes(x=reorder(Category, -Prop), y=Prop, fill=as.factor(Category))) +  geom_bar(colour = "black", stat = "identity", size = 1.2) + scale_fill_brewer(palette = "RdYlBu") + theme_classic(base_size = 15) + theme(legend.position="none", axis.line = element_blank()) + ylab ("Percentage of answers") + xlab("") + ylim (0,100) + labs(subtitle = "Participants who have made an attempt", caption = "n = 28")
+```
+&nbsp;
+
+We can see that roughly 20% (28/132) of the participants have previously made an attempt to amend some of their work. Out of these 28 participants, 68% have made a successful attempt and 32% an unsuccesful attempt.
+
+&nbsp;
+&nbsp;
+
+### Question 8: If your attempt was successful: would you agree that the current amendment system works well?
+
+Optional question, multiple answers possible. Participants were given various options and also the option to formulate a different answer. Here we only include the individuals that have previously answered that they have made a successful attempt (n = 19)
+
+```{r}
+Q8$Category = factor(Q8$Category, levels = c("Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"))
+
+ggplot(Q8, aes(x=Category, y=Prop, fill=as.factor(Category))) +  geom_bar(colour = "black", stat = "identity", size = 1.2) + scale_fill_brewer(palette = "RdYlBu") + theme_classic(base_size = 15) + theme(legend.position="none", axis.line = element_blank()) + ylab ("Percentage of answers") + xlab("") + ylim (0,100) + labs(subtitle = "Participants with succesfull attempts", caption = "n = 19")
+```
+&nbsp;
+
+Despite having made at least one succesful attempt, only a quarter of the participants indicated that they think the current system works well (Agree or Strongly agree; 5/19; 26%). The largest group of participants didn't agree or disagree with the statement (Neutral; 8/19; 42%), followed by the group of participants that think that the current system does not function well (Disagree or Strongly disagree; 6/19; 32%).
+
+&nbsp;
+&nbsp;
+
+### Question 9: If the attempt for amendment was unsuccessful: Why?
+
+Optional question, multiple answers possible. Participants were given various options and also the option to formulate a different answer. Here we exclude individuals who responded "I have made no attempts". That, together with the fact that this question was optional, led to a sample of n = 11 individuals.
+
+```{r}
+ggplot(Q9, aes(x=reorder(Category, -Prop), y=Prop, fill=as.factor(Category))) +  geom_bar(colour = "black", stat = "identity", size = 1.2) + scale_fill_brewer(palette = "RdYlBu") + theme_classic(base_size = 15) + theme(legend.position="none", axis.line = element_blank()) + ylab ("Percentage of individuals") + xlab("")  + labs(subtitle = "Participants who have made a previous attempt", caption = "n = 11") + ylim (0,100) + scale_x_discrete(labels = wrap_format(10))
+
+```
+&nbsp;
+
+Participants reported "Editors/Journals not being cooperative" as the main reason for why amendments were unsuccessful. 
+
+&nbsp;
+&nbsp;
+
+### Question 10: If you haven't formalized an attempt for amendment: Why not?
+
+Optional question, multiple answers possible. Participants were given various options and also the option to formulate a different answer. After omitting rows of participants that answered "I have not considered an attempt", the remaining dataset consisted of n = 34 participants.
+
+```{r}
+ggplot(Q10, aes(x=reorder(Category, -Prop), y=Prop, fill=as.factor(Category))) +  geom_bar(colour = "black", stat = "identity", size = 1.2) + scale_fill_brewer(palette = "RdYlBu") + theme_classic(base_size = 15) + theme(legend.position="none", axis.line = element_blank()) + ylab ("Percentage of individuals") + xlab("")  + labs(subtitle = "Participants who considered an attempt", caption = "n = 34") + ylim (0,100) + scale_x_discrete(labels = wrap_format(10))
+```
+&nbsp;
+
+Compared to Question 9, we see that participants indicate that the main reason for not formalizing attempts is because they find it unclear how to proceed (58%). In addition, we see again that the confrontation with editors/journals is something that can withhold individuals from making amendments, since 35% gave this as a reason.  
+
+&nbsp;
+&nbsp;
+
+## Our proposal and the final question of the survey 
+
+In our main manuscript, we make a case for implementing an additional amendment system that can facilitate the whole process of amendments of scientific papers within science as a whole. We wanted to explore whether there would be support for our proposal, and therefore we asked the participants of our survey whether they would welcome our suggestion. 
+
+&nbsp;
+
+Specifically, we presented them with the following framework: 
+
+##### **_Imagine adding a link to published papers, which would direct readers to an online, open and updateable repository (e.g. Github, OSF, etc.). Such a framework would be used by the authors of the paper to add any update to said paper. Updates can be amendments, text corrections, additional data and analysis. These updates would not alter the journal's version of record. This system would not need any involvement from the journals (except providing the link)._** 
+
+&nbsp;
+&nbsp;
+
+### Question 11: Would you welcome such a framework for published papers (ran by authors)? 
+
+Mandatory question, only one answer possible. Participants were given "Yes", "No" and "Maybe" as option, together with the additional option to formulate their own answer answer. Since all unique answers included some sort of conditional support, we decided to group all of these, together with every "Maybe" answer, into one category named "Conditional support".
+
+```{r}
+ggplot(Q11, aes(x=reorder(Category, -Prop), y=Prop, fill=as.factor(Category))) +  geom_bar(colour = "black", stat = "identity", size = 1.2) + scale_fill_brewer(palette = "RdYlBu") + theme_classic(base_size = 15) + theme(legend.position="none", axis.line = element_blank()) + ylab ("Percentage of answers") + xlab("") + ylim (0,100) + labs(caption = "n = 132") 
+```
+&nbsp;
+
+We found that the majority of the participants are in support of our proposed framework (81/132; 61%). Another 32% (42/132) indicated conditional support, and only 7% (9/132) were against our proposed framework. 
+
+&nbsp;
