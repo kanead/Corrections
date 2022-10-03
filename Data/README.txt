@@ -1,6 +1,6 @@
-Survey was stopped after three weeks. Last entry was on the 27th of January 
+##Survey was stopped after three weeks. Last entry was on the 27th of January 
 
-132 responses in total 
+##132 responses in total 
 
 For analysis: 
 There were two questions that had multiple options, namely: 
