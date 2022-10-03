@@ -2,4 +2,10 @@
 
 Paper discussing an alternative approach to the corrections process 'Patching Science – amending the literature through version control'
 
-There are three folders, one with files related to building the manuscript, one with the survey results presented in html format and one with the raw data from the survey.
+## Three associated folders
+
+### 1. Manuscript contains files and figures needed to build the manuscript
+
+### 2. Data contains the raw data from the survey
+
+### 3. Code contains code used to present the survey results
