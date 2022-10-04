@@ -3,8 +3,8 @@ title: "Patching Science – amending the literature through version control"
 author: "Adam Kane^1^ & Bawan Amin^1^"
 date: ""
 output:
-  pdf_document: default
   word_document: default
+  pdf_document: default
   html_document: default
 bibliography: refs.bib
 ---
@@ -52,9 +52,9 @@ We believe there are multiple benefits to our proposed system. The number one be
 
 We suspect that our relatively frictionless system would engender a culture of correction including an awareness of correction as a possibility [@teixeira2021ending]. Adhering to semantic versioning would allow authors to have a natural flow if they use preprints by referring to this version as the beta stage. Further, it would offer plenty of grist for students to verify/update/correct the work of their supervisor – typically a principal investigator who may have more time constraints. This would stand to benefit the students who could point to tangible outputs from their own efforts on their CVs. It would also empower authors to raise flags about their own work even if they haven’t yet had time to address them (cf. the Loss-of-Confidence Project [@rohrer2021putting]). Historical works that do not have an internal link to GitHub could still be updated using this system by establishing a page for the paper post hoc. 
 
-There are some potential issues with our proposal. For one, there is a separation between the amendment and the journal, although this could also be considered as a positive as argued before. The onus here is on the authors to advertise any changes. The semantic versioning system using the same title as the paper should help here in terms of search engines turning up both. Further, as noted earlier, interested readers could follow a GitHub repository of a paper so they are alerted to any changes. Non open access journals could take issue with wholesale replication of the publication outside of their website. Here authors could discuss changes to specific sections of the paper that only those with access to the paper could make sense of. Then there are questions of what to do if the paper is so flawed that it needs to be retracted or instances of malpractice. In this case we agree that contacting the journal is best practice.  Though here again, initial concerns could be flagged early by the authors.
+There are some potential issues with our proposal. For one, there is a separation between the amendment and the journal, although this could also be considered as a positive as argued before. The onus here is on the authors to advertise any changes. The semantic versioning system using the same title as the paper should help here in terms of search engines turning up both. Further, as noted earlier, interested readers could follow a GitHub repository of a paper so they are alerted to any changes. Non open access journals could take issue with wholesale replication of the publication outside of their website. Here authors could discuss changes to specific sections of the paper that only those with access to the paper could make sense of. Then there are questions of what to do if the paper is so flawed that it needs to be retracted or instances of malpractice. In this case we agree that contacting the journal is best practice. Though here again, initial concerns could be flagged early by the authors.
 
-We argue that the concerns raised by people in our survey as well as our own thoughts of potential shortcomings are not unique to this system. Disagreement among co-authors, visibility of the amendment and malpractice are some of the issues raised that pertain just as much to the current system of corrections [@molckovsky2011characterization]. Indeed, we note that ours is an additional system, it allows for immediate corrections, where authors can still go through the established route if they desire. 
+We argue that the concerns raised by people in our survey as well as our own thoughts of potential shortcomings are not unique to this system. Disagreement among co-authors, visibility of the amendment and malpractice are some of the issues raised that pertain just as much to the current system of corrections [@molckovsky2011characterization; @teixeira2022synthesis]. Indeed, we note that ours is an additional system, it allows for immediate corrections, where authors can still go through the established route if they desire. 
 
 ## Conclusions
 Our findings add more weight to the view that the current system of academic publication hinders science by disincentivising corrections and amendments to published literature [@allison2016reproducibility]. A system of version control, as we detail here, would offer numerous benefits to what is an inherently dynamic and imperfect process of discovery [@ioannidis2005most], all the while keeping the version of record. The fundamentals to this system are already out there and simply require buy-in from the community. Although it is not a perfect system, we believe a constantly updating and updateable literature that is in the hands of the authors better reflects the ideal of science. With this, we can take another step towards a more robust and reliable scientific literature and an improved working academic climate.
@@ -66,7 +66,7 @@ Ethical clearance was granted by UCD’s Human Research Ethics Committee - Resea
 Thanks to the Laboratory of Wildlife Ecology and Behaviour at UCD for testing our survey and providing valuable feedback on the questions. 
 
 ## Open Science statement
-Updates of this paper can be found following this link: https://github.com/kanead/Corrections
+Supplementary data and updates of this paper can be found following this link: https://github.com/kanead/Corrections
 
 ## References  
 
