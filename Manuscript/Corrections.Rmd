@@ -3,8 +3,8 @@ title: "Amending the literature through version control"
 author: "Adam Kane^1^ & Bawan Amin^1^"
 date: ""
 output:
-  word_document: default
   pdf_document: default
+  word_document: default
   html_document: default
 bibliography: refs.bib
 ---
@@ -59,14 +59,8 @@ We argue that the concerns raised in our survey as well as our own thoughts of p
 ## Conclusions
 Our findings add weight to the view that the current system of academic publication hinders science by disincentivising corrections and amendments to published literature [@allison2016reproducibility]. A system of version control, as we detail here, would offer numerous benefits to what is an inherently dynamic and imperfect process of discovery [@ioannidis2005most], all the while keeping the version of record. Our work will also serve to highlight corrections as a possibility, something that many of our survey respondents were unaware of. The fundamentals to this system are already out there and simply require buy-in from the community. Although it is not a perfect system, we believe a constantly updating and updateable literature that is in the hands of the authors better reflects the ideal of science. With this, we can take another step towards a more robust and reliable scientific literature and an improved working academic climate.
 
-## Ethics
-Ethical clearance was granted by UCD’s Human Research Ethics Committee - Research Ethics Reference Number: LS-E-21-281-Amin-Kane.
-
 ## Acknowledgements 
 Thanks to the Laboratory of Wildlife Ecology and Behaviour at UCD for testing our survey and providing valuable feedback on the questions. 
-
-## Open Science statement
-Supplementary data and updates of this paper can be found here: https://github.com/kanead/Corrections
 
 ## References  
 
