@@ -3,8 +3,8 @@ title: "Amending the literature through version control"
 author: "Adam Kane^1^ & Bawan Amin^1^"
 date: ""
 output:
-  pdf_document: default
   word_document: default
+  pdf_document: default
   html_document: default
 bibliography: refs.bib
 ---
@@ -28,7 +28,7 @@ Then there is the simple opportunity cost of dealing with relatively minor issue
 This is all aggravating because the internet offers us a way forward through version control. The static face of academic publications is a holdover from times where print held sway, but the dynamic and reflective nature of the internet is much more in keeping with how science should operate [@o2021towards]. We propose that researchers should create versions of their own papers that record amendments to their work while retaining the original published manuscript for reference. Here we report results from our own survey to assess the level of support for our proposal, detail how the system would work, including its benefits, and respond to potential counterarguments. 
 
 ## Survey 
-We developed a survey to enquire about scientists’ knowledge, exposure, and experience with the process of issuing a correction (see supplement). We also asked the following statement that relates to our proposed solution:
+We developed a survey to enquire about scientists’ knowledge, exposure, and experience with the process of issuing a correction (see supplement @kane2022correct). We also asked the following statement that relates to our proposed solution:
 
 _"Imagine adding a link to published papers, which would direct readers to an online, open and updateable repository (e.g. GitHub, OSF, etc.). Such a framework would be used by the authors of the paper to add any update to said paper. Updates can be amendments, text corrections, additional data and analysis. These updates would not alter the journal's version of record. This system would not need any involvement from the journals (except providing the link)."_
 
